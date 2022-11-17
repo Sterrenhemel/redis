@@ -10,6 +10,14 @@ ARG REDIS_DOWNLOAD_URL="http://download.redis.io/"
 
 ARG REDIS_VERSION="stable"
 
+ARG REDIS_VER=7.0.5
+
+# stretch|bionic|buster
+ARG OSNICK=bullseye
+
+# ARCH=x64|arm64v8|arm32v7
+ARG ARCH=x64
+
 RUN apk add --no-cache su-exec tzdata make curl build-base linux-headers bash openssl-dev
 
 RUN curl -fL -Lo /tmp/redis-${REDIS_VERSION}.tar.gz ${REDIS_DOWNLOAD_URL}/redis-${REDIS_VERSION}.tar.gz && \
@@ -21,14 +29,6 @@ RUN curl -fL -Lo /tmp/redis-${REDIS_VERSION}.tar.gz ${REDIS_DOWNLOAD_URL}/redis-
 
 #----------------------------------------------------------------------------------------------
 FROM redisfab/redis:${REDIS_VER}-${ARCH}-${OSNICK} AS builder2
-
-ARG REDIS_VER=7.0.5
-
-# stretch|bionic|buster
-ARG OSNICK=bullseye
-
-# ARCH=x64|arm64v8|arm32v7
-ARG ARCH=x64
 
 RUN apt-get update -qq && apt-get install -y git
 
