@@ -16,10 +16,10 @@ jobs:
       -
         name: Docker meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: |
-            glenaaa/${{ github.repository }}
+            glenaaa/${{ github.event.repository.name }}
             ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=1.0.${{ github.run_number }},priority=1000
