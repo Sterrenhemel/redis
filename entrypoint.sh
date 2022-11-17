@@ -92,13 +92,13 @@ start_redis() {
     if [[ "${SETUP_MODE}" == "cluster" ]]; then
         echo "Starting redis service in cluster mode....."
         if [[ "${REDIS_MAJOR_VERSION}" != "v7" ]]; then
-          redis-server /etc/redis/redis.conf --cluster-announce-ip "${POD_IP}"
+          redis-server /etc/redis/redis.conf --cluster-announce-ip "${POD_IP}" --loadmodule "/usr/local/lib/redis/modules/redisbloom.so"
         else
-          redis-server /etc/redis/redis.conf
+          redis-server /etc/redis/redis.conf --loadmodule "/usr/local/lib/redis/modules/redisbloom.so"
         fi
     else
         echo "Starting redis service in standalone mode....."
-        redis-server /etc/redis/redis.conf
+        redis-server /etc/redis/redis.conf --loadmodule "/usr/local/lib/redis/modules/redisbloom.so"
     fi
 }
 
