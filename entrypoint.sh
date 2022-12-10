@@ -93,23 +93,23 @@ start_redis() {
         echo "Starting redis service in cluster mode....."
         if [[ "${REDIS_MAJOR_VERSION}" != "v7" ]]; then
           redis-server /etc/redis/redis.conf --cluster-announce-ip "${POD_IP}" \
-            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so" 
+            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so" \
+            --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairzset_module.so" \
-            # --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairstring_module.so"
         else
           redis-server /etc/redis/redis.conf \
-            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so"
+            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so" \
+            --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairzset_module.so" \
-            # --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairstring_module.so"
         fi
     else
         echo "Starting redis service in standalone mode....."
         redis-server /etc/redis/redis.conf \
-            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so"
+            --loadmodule "/usr/local/lib/redis/modules/redisbloom.so" \
+            --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairzset_module.so" \
-            # --loadmodule "/usr/local/lib/redis/modules/tairhash_module.so" 
             # --loadmodule "/usr/local/lib/redis/modules/tairstring_module.so"
     fi
 }

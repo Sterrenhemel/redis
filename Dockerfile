@@ -31,9 +31,9 @@ RUN apt-get update -qq && apt-get install -y git
 
 RUN git clone --recursive https://github.com/RedisBloom/RedisBloom.git /app/redis-bloom
 
-# RUN git clone --recursive https://github.com/alibaba/TairZset.git /app/tair-zset
+RUN git clone --recursive https://github.com/alibaba/TairZset.git /app/tair-zset
 
-# RUN git clone --recursive https://github.com/alibaba/TairHash /app/tair-hash
+RUN git clone --recursive https://github.com/alibaba/TairHash /app/tair-hash
 
 # RUN git clone --recursive https://github.com/alibaba/TairString /app/tair-string
 
@@ -80,8 +80,8 @@ LABEL VERSION=1.0 \
 COPY --from=builder1 /usr/local/bin/redis-server /usr/local/bin/redis-server
 COPY --from=builder1 /usr/local/bin/redis-cli /usr/local/bin/redis-cli
 COPY --from=builder2 /app/redis-bloom/bin/linux-x64-release/redisbloom.so /usr/local/lib/redis/modules/redisbloom.so
-# COPY --from=builder2 /app/tair-zset/lib/tairzset_module.so /usr/local/lib/redis/modules/tairzset_module.so
-# COPY --from=builder2 /app/tair-hash/lib/tairhash_module.so /usr/local/lib/redis/modules/tairhash_module.so
+COPY --from=builder2 /app/tair-zset/lib/tairzset_module.so /usr/local/lib/redis/modules/tairzset_module.so
+COPY --from=builder2 /app/tair-hash/lib/tairhash_module.so /usr/local/lib/redis/modules/tairhash_module.so
 # COPY --from=builder2 /app/tair-string/lib/tairstring_module.so /usr/local/lib/redis/modules/tairstring_module.so
 
 RUN addgroup -S -g 1000 redis && adduser -S -G redis -u 1000 redis && \
